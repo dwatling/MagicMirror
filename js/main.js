@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
         date = date[0] + ' ' + date[1] + ' ' + date[2] + ' ' + date[3];
 
 		$('.date').html(date);
-		$('.time').html(now.format('HH') + ':' + now.format('mm') + '<span class="sec">'+now.format('ss')+'</span>');
+		$('.time').html(now.format('h') + ':' + now.format('mm') + '<span class="sec">'+now.format('ss')+' '+now.format('a')+'</span>');
 
 		setTimeout(function() {
 			updateTime();
@@ -134,11 +134,12 @@ jQuery(document).ready(function($) {
         		//only add fututre events, days doesn't work, we need to check seconds
         		if (seconds >= 0) {
                     if (seconds <= 60*60*5 || seconds >= 60*60*24*2) {
-                        var time_string = moment(startDate).fromNow();
+                        //var time_string = moment(startDate).fromNow();
+						var time_string = 'in ' + (days +1) + ' days';
                     }else {
                         var time_string = moment(startDate).calendar()
                     }
-                    if (!e.RRULE) {
+                    if (!e.RRULE && days < 365) {
     	        		eventList.push({'description':e.SUMMARY,'seconds':seconds,'days':time_string});
                     }
                     e.seconds = seconds;
@@ -256,6 +257,7 @@ jQuery(document).ready(function($) {
 			var temp = roundVal(json.main.temp);
 			var temp_min = roundVal(json.main.temp_min);
 			var temp_max = roundVal(json.main.temp_max);
+			var humidity = roundVal(json.main.humdity);
 
 			var wind = roundVal(json.wind.speed);
 
@@ -319,12 +321,14 @@ jQuery(document).ready(function($) {
 						'timestamp':forecast.dt * 1000,
 						'icon':forecast.weather[0].icon,
 						'temp_min':forecast.main.temp,
-						'temp_max':forecast.main.temp
+						'temp_max':forecast.main.temp,
+						'humidity':forecast.main.humidity
 					};
 				} else {
 					forecastData[dateKey]['icon'] = forecast.weather[0].icon;
 					forecastData[dateKey]['temp_min'] = (forecast.main.temp < forecastData[dateKey]['temp_min']) ? forecast.main.temp : forecastData[dateKey]['temp_min'];
 					forecastData[dateKey]['temp_max'] = (forecast.main.temp > forecastData[dateKey]['temp_max']) ? forecast.main.temp : forecastData[dateKey]['temp_max'];
+					forecastData[dateKey]['humidity'] = forecast.main.humidity;
 				}
 
 			}
@@ -342,6 +346,7 @@ jQuery(document).ready(function($) {
 				row.append($('<td/>').addClass('icon-small').addClass(iconClass));
 				row.append($('<td/>').addClass('temp-max').html(roundVal(forecast.temp_max)));
 				row.append($('<td/>').addClass('temp-min').html(roundVal(forecast.temp_min)));
+				row.append($('<td/>').addClass('humidity').html(roundVal(forecast.humidity) + '%'));
 
 				forecastTable.append(row);
 				opacity -= 0.155;

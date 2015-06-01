@@ -6,31 +6,28 @@ var lang = window.navigator.language;
 //change weather params here:
 //units: metric or imperial
 var weatherParams = {
-    'q':'Baarn,Netherlands',
-    'units':'metric',
-    'lang':lang
+    'q':'McHenry,Illinois',
+    'lang':lang,
+    'units':'imperial'
 };
 
-var feed = 'http://feeds.nos.nl/nosjournaal?format=rss';
-//var feed = 'http://www.nu.nl/feeds/rss/achterklap.rss';
-//var feed = 'http://www.nu.nl/feeds/rss/opmerkelijk.rss';
-//var feed = 'http://www.nytimes.com/services/xml/rss/nyt/HomePage.xml';
+var feed = 'http://www.nwherald.com/?rss=news/local';
 
 // compliments:
 var morning = [
-            'Good morning, handsome!',
-            'Enjoy your day!',
-            'How was your sleep?'
+            'Good morning!',
+            'Don\'t forget to brush your teeth!',
+            'Did you have breakfast?'
         ];
         
 var afternoon = [
-            'Hello, beauty!',
-            'You look sexy!',
-            'Looking good today!'
+            'Good afternoon!',
+            'Did you water your plants yet?',
+            'I trust you are having a good day.'
         ];
        
 var evening = [
-            'Wow, you look hot!',
-            'You look nice!',
-            'Hi, sexy!'
+            'Good evening!',
+            'Did you have a nice day?',
+            'Don\'t forget to brush your teeth before bed!'
         ];
